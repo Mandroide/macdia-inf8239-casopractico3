@@ -1,0 +1,39 @@
+repos:
+  # ――― Black code formatter ―――
+  - repo: https://github.com/psf/black
+    rev: 25.1.0
+    hooks: [id: black]
+  # ――― isort (imports) configured for Black style ―――
+  - repo: https://github.com/PyCQA/isort
+    rev: 6.0.1
+    hooks:
+      - id: isort
+        args: [ "--profile", "black" ]
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.11.12
+    hooks:
+      # Run the linter.
+      - id: ruff-check
+        types_or: [ python, pyi ]
+        args: [ "--fix" ]     # auto-fix where possible
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.10.1
+    hooks:
+      - id: mypy
+        args: [ --strict, --ignore-missing-imports ]
+        additional_dependencies:
+          - types-PyYAML
+          - pydantic
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.5.0
+    hooks:
+      - id: detect-secrets
+        exclude: 'notebooks'
+  - repo: local
+    hooks:
+      - id: jupyter-nb-clear-output
+        name: jupyter-nb-clear-output
+        files: \.ipynb$
+        stages: [commit]
+        language: system
+        entry: jupyter nbconvert --ClearOutputPreprocessor.enabled=True --inplace
