@@ -59,7 +59,7 @@ uv pip install -r pyproject.toml
 
 ## Como correrlo
 ```shell
-# 1. Corre tu colector (genera datos)
+# 1. Corre tu colector (genera datos crudos de la API de X o Twitter)
 python 1_data_collector.py
 
 # 2. Entrena (solo UNA vez)
@@ -69,3 +69,6 @@ python 2_model_trainer.py
 # 3. Predice incidencia de transito de tweets
 python 3_model_predictor.py
 ```
+
+## Notas acerca de data_collector
+Para usar dicho script, se requiere una suscripción por lo menos básica en [X Developer Platform](https://developer.x.com/en).
