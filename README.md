@@ -72,3 +72,10 @@ python 3_model_predictor.py
 
 ## Notas acerca de data_collector
 Para usar dicho script, se requiere una suscripción por lo menos básica en [X Developer Platform](https://developer.x.com/en).
+
+## Criterios de severidad
+| Severidad | Criterios (ejemplos)                                                                                                                                                                                           |
+|-----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Alta      | <ul><li>Heridos/graves/muertos</li><li>Cierre total de vía</li><li>Duración > 2-3 horas</li><li>Intervención policial/bomberos</li><li>Palabras: "grave", "muerto", "hospital", "cerrado", "colapso"</li></ul> |
+| Media     | <ul><li>Retención significativa (>30 min)</li><li>Carril bloqueado</li><li>Desvíos necesarios</li><li>Palabras: "lento", "congestionado", "atascado", "varios carros"</li></ul>                                |
+| Baja      | <ul><li>Retención leve (<15 min)</li><li>Obstrucción menor</li><li>Sin afectación mayor</li><li>Palabras: "poquito", "pasando lento", "se mueve"</li></ul>                                                     |
