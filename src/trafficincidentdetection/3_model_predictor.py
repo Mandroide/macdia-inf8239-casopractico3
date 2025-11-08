@@ -9,7 +9,6 @@ pipeline = joblib.load(pathlib.Path(__file__).parents[2]/'models/traffic_predict
 
 
 def predict_incident(texto: str,
-                     ubicacion_geo: str | None = None,
                      fecha: float | str | datetime.datetime | datetime.date = None) -> dict:
     """Predice tipo y severidad de un tweet"""
 
@@ -24,13 +23,11 @@ def predict_incident(texto: str,
     hora = pd.to_datetime(fecha or '2025-01-01', errors='coerce').hour if fecha else 12
     dia_semana = pd.to_datetime(fecha or '2025-01-01', errors='coerce').dayofweek if fecha else 0
 
-    en_sd = 1 if ubicacion_geo and 'santo domingo' in ubicacion_geo.lower() else 0
-    en_santiago = 1 if ubicacion_geo and 'santiago' in ubicacion_geo.lower() else 0
     palabras_graves = 1 if any(p in texto_clean for p in ['muerto', 'herido', 'grave', 'fatal', 'accidente']) else 0
 
     # Vectorizar
     text_features = pipeline['vectorizer'].transform([texto_clean]).toarray()
-    num_features = np.array([[texto_len, hora, dia_semana, en_sd, en_santiago, palabras_graves]])
+    num_features = np.array([[texto_len, hora, dia_semana, palabras_graves]])
     X = np.hstack([text_features, num_features])
 
     # Predecir
@@ -58,8 +55,5 @@ def predict_incident(texto: str,
 
 
 # TEST
-print(predict_incident(
-    "🚨 ACCIDENTE GRAVE en Autopista Duarte km 45! Heridos reportados",
-    "Santo Domingo"
-))
+print(predict_incident("🚨 ACCIDENTE GRAVE en Autopista Duarte km 45! Heridos reportados"))
 # → {'tipo_incidente': 'accidente', 'severidad': 'alta', 'confianza_tipo': 0.92}
